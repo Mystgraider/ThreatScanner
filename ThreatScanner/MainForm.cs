@@ -39,5 +39,9 @@ namespace ThreatScanner
         {
             new CsrfTesterForm().Show();
         }
+        private void button_OpenAutoFill_Click(object sender, EventArgs e)
+        {
+            new AutoFillForm().Show();
+        }
     }
 }

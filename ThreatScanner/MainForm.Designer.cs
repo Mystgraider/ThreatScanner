@@ -28,6 +28,8 @@
             this.label_WsDesc = new System.Windows.Forms.Label();
             this.button_OpenCsrf = new System.Windows.Forms.Button();
             this.label_CsrfDesc = new System.Windows.Forms.Label();
+            this.button_OpenAutoFill = new System.Windows.Forms.Button();
+            this.label_AutoFillDesc = new System.Windows.Forms.Label();
             this.label_Disclaimer = new System.Windows.Forms.Label();
             this.panel_TopBar.SuspendLayout();
             this.panel_Cards.SuspendLayout();
@@ -41,7 +43,7 @@
             this.panel_TopBar.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel_TopBar.Location = new System.Drawing.Point(0, 0);
             this.panel_TopBar.Name = "panel_TopBar";
-            this.panel_TopBar.Size = new System.Drawing.Size(1840, 80);
+            this.panel_TopBar.Size = new System.Drawing.Size(1482, 80);
             this.panel_TopBar.TabIndex = 1;
             // 
             // label_Title
@@ -79,15 +81,18 @@
             this.panel_Cards.Controls.Add(this.label_WsDesc);
             this.panel_Cards.Controls.Add(this.button_OpenCsrf);
             this.panel_Cards.Controls.Add(this.label_CsrfDesc);
+            this.panel_Cards.Controls.Add(this.button_OpenAutoFill);
+            this.panel_Cards.Controls.Add(this.label_AutoFillDesc);
             this.panel_Cards.Controls.Add(this.label_Disclaimer);
             this.panel_Cards.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel_Cards.Location = new System.Drawing.Point(0, 80);
             this.panel_Cards.Name = "panel_Cards";
-            this.panel_Cards.Size = new System.Drawing.Size(1840, 263);
+            this.panel_Cards.Size = new System.Drawing.Size(1482, 460);
             this.panel_Cards.TabIndex = 0;
             // 
             // button_OpenScanner
             // 
+            this.button_OpenScanner.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.button_OpenScanner.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(99)))), ((int)(((byte)(235)))));
             this.button_OpenScanner.Cursor = System.Windows.Forms.Cursors.Hand;
             this.button_OpenScanner.FlatAppearance.BorderSize = 0;
@@ -104,6 +109,7 @@
             // 
             // label_ScannerDesc
             // 
+            this.label_ScannerDesc.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.label_ScannerDesc.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.label_ScannerDesc.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(85)))), ((int)(((byte)(105)))));
             this.label_ScannerDesc.Location = new System.Drawing.Point(30, 170);
@@ -115,6 +121,7 @@
             // 
             // button_OpenBruteForce
             // 
+            this.button_OpenBruteForce.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.button_OpenBruteForce.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(38)))), ((int)(((byte)(38)))));
             this.button_OpenBruteForce.Cursor = System.Windows.Forms.Cursors.Hand;
             this.button_OpenBruteForce.FlatAppearance.BorderSize = 0;
@@ -131,6 +138,7 @@
             // 
             // label_BruteDesc
             // 
+            this.label_BruteDesc.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.label_BruteDesc.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.label_BruteDesc.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(85)))), ((int)(((byte)(105)))));
             this.label_BruteDesc.Location = new System.Drawing.Point(390, 170);
@@ -142,6 +150,7 @@
             // 
             // button_OpenApiTester
             // 
+            this.button_OpenApiTester.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.button_OpenApiTester.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(5)))), ((int)(((byte)(150)))), ((int)(((byte)(105)))));
             this.button_OpenApiTester.Cursor = System.Windows.Forms.Cursors.Hand;
             this.button_OpenApiTester.FlatAppearance.BorderSize = 0;
@@ -158,6 +167,7 @@
             // 
             // label_ApiDesc
             // 
+            this.label_ApiDesc.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.label_ApiDesc.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.label_ApiDesc.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(85)))), ((int)(((byte)(105)))));
             this.label_ApiDesc.Location = new System.Drawing.Point(750, 170);
@@ -169,6 +179,7 @@
             // 
             // button_OpenWebSocket
             // 
+            this.button_OpenWebSocket.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.button_OpenWebSocket.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(234)))), ((int)(((byte)(88)))), ((int)(((byte)(12)))));
             this.button_OpenWebSocket.Cursor = System.Windows.Forms.Cursors.Hand;
             this.button_OpenWebSocket.FlatAppearance.BorderSize = 0;
@@ -185,6 +196,7 @@
             // 
             // label_WsDesc
             // 
+            this.label_WsDesc.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.label_WsDesc.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.label_WsDesc.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(85)))), ((int)(((byte)(105)))));
             this.label_WsDesc.Location = new System.Drawing.Point(1110, 170);
@@ -196,13 +208,14 @@
             // 
             // button_OpenCsrf
             // 
+            this.button_OpenCsrf.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.button_OpenCsrf.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(40)))), ((int)(((byte)(217)))));
             this.button_OpenCsrf.Cursor = System.Windows.Forms.Cursors.Hand;
             this.button_OpenCsrf.FlatAppearance.BorderSize = 0;
             this.button_OpenCsrf.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button_OpenCsrf.Font = new System.Drawing.Font("Segoe UI", 13F, System.Drawing.FontStyle.Bold);
             this.button_OpenCsrf.ForeColor = System.Drawing.Color.White;
-            this.button_OpenCsrf.Location = new System.Drawing.Point(1470, 60);
+            this.button_OpenCsrf.Location = new System.Drawing.Point(30, 240);
             this.button_OpenCsrf.Name = "button_OpenCsrf";
             this.button_OpenCsrf.Size = new System.Drawing.Size(330, 100);
             this.button_OpenCsrf.TabIndex = 8;
@@ -212,9 +225,10 @@
             // 
             // label_CsrfDesc
             // 
+            this.label_CsrfDesc.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.label_CsrfDesc.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.label_CsrfDesc.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(85)))), ((int)(((byte)(105)))));
-            this.label_CsrfDesc.Location = new System.Drawing.Point(1470, 170);
+            this.label_CsrfDesc.Location = new System.Drawing.Point(30, 350);
             this.label_CsrfDesc.Name = "label_CsrfDesc";
             this.label_CsrfDesc.Size = new System.Drawing.Size(330, 50);
             this.label_CsrfDesc.TabIndex = 9;
@@ -222,15 +236,44 @@
     "ts";
             this.label_CsrfDesc.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // button_OpenAutoFill
+            // 
+            this.button_OpenAutoFill.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.button_OpenAutoFill.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(217)))), ((int)(((byte)(119)))), ((int)(((byte)(6)))));
+            this.button_OpenAutoFill.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.button_OpenAutoFill.FlatAppearance.BorderSize = 0;
+            this.button_OpenAutoFill.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button_OpenAutoFill.Font = new System.Drawing.Font("Segoe UI", 13F, System.Drawing.FontStyle.Bold);
+            this.button_OpenAutoFill.ForeColor = System.Drawing.Color.White;
+            this.button_OpenAutoFill.Location = new System.Drawing.Point(390, 240);
+            this.button_OpenAutoFill.Name = "button_OpenAutoFill";
+            this.button_OpenAutoFill.Size = new System.Drawing.Size(330, 100);
+            this.button_OpenAutoFill.TabIndex = 10;
+            this.button_OpenAutoFill.Text = "📝  Auto Fill";
+            this.button_OpenAutoFill.UseVisualStyleBackColor = false;
+            this.button_OpenAutoFill.Click += new System.EventHandler(this.button_OpenAutoFill_Click);
+            // 
+            // label_AutoFillDesc
+            // 
+            this.label_AutoFillDesc.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.label_AutoFillDesc.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.label_AutoFillDesc.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(85)))), ((int)(((byte)(105)))));
+            this.label_AutoFillDesc.Location = new System.Drawing.Point(390, 350);
+            this.label_AutoFillDesc.Name = "label_AutoFillDesc";
+            this.label_AutoFillDesc.Size = new System.Drawing.Size(330, 50);
+            this.label_AutoFillDesc.TabIndex = 11;
+            this.label_AutoFillDesc.Text = "Automatically populate form fields\nwith test data sets";
+            this.label_AutoFillDesc.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // label_Disclaimer
             // 
             this.label_Disclaimer.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.label_Disclaimer.Font = new System.Drawing.Font("Segoe UI", 8.5F, System.Drawing.FontStyle.Italic);
             this.label_Disclaimer.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(148)))), ((int)(((byte)(163)))), ((int)(((byte)(184)))));
-            this.label_Disclaimer.Location = new System.Drawing.Point(0, 235);
+            this.label_Disclaimer.Location = new System.Drawing.Point(0, 432);
             this.label_Disclaimer.Name = "label_Disclaimer";
-            this.label_Disclaimer.Size = new System.Drawing.Size(1840, 28);
-            this.label_Disclaimer.TabIndex = 10;
+            this.label_Disclaimer.Size = new System.Drawing.Size(1482, 28);
+            this.label_Disclaimer.TabIndex = 12;
             this.label_Disclaimer.Text = "⚠️  For authorized penetration testing only. Unauthorized use is illegal.";
             this.label_Disclaimer.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
@@ -239,11 +282,11 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(249)))), ((int)(((byte)(250)))));
-            this.ClientSize = new System.Drawing.Size(1840, 343);
+            this.ClientSize = new System.Drawing.Size(1482, 540);
             this.Controls.Add(this.panel_Cards);
             this.Controls.Add(this.panel_TopBar);
             this.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.MinimumSize = new System.Drawing.Size(1840, 380);
+            this.MinimumSize = new System.Drawing.Size(1500, 580);
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ThreatScanner — Select Tool";
@@ -265,11 +308,13 @@
         private System.Windows.Forms.Button button_OpenApiTester;
         private System.Windows.Forms.Button button_OpenWebSocket;
         private System.Windows.Forms.Button button_OpenCsrf;
+        private System.Windows.Forms.Button button_OpenAutoFill;
         private System.Windows.Forms.Label label_ScannerDesc;
         private System.Windows.Forms.Label label_BruteDesc;
         private System.Windows.Forms.Label label_ApiDesc;
         private System.Windows.Forms.Label label_WsDesc;
         private System.Windows.Forms.Label label_CsrfDesc;
+        private System.Windows.Forms.Label label_AutoFillDesc;
         private System.Windows.Forms.Label label_Disclaimer;
     }
 }

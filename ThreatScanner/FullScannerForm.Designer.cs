@@ -39,11 +39,11 @@
             this.label_DnsInfo = new System.Windows.Forms.Label();
             this.panel_Output = new System.Windows.Forms.Panel();
             this.dataGridView_Output = new System.Windows.Forms.DataGridView();
-            this.label_Output = new System.Windows.Forms.Label();
-            this.progressBar_Scan = new System.Windows.Forms.ProgressBar();
             this.colName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colResponse = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.label_Output = new System.Windows.Forms.Label();
+            this.progressBar_Scan = new System.Windows.Forms.ProgressBar();
             this.panel_TopBar.SuspendLayout();
             this.panel_UrlBar.SuspendLayout();
             this.tabControl_Main.SuspendLayout();
@@ -372,27 +372,6 @@
             this.dataGridView_Output.TabIndex = 0;
             this.dataGridView_Output.MouseDown += new System.Windows.Forms.MouseEventHandler(this.dataGridView_Output_MouseDown);
             // 
-            // label_Output
-            // 
-            this.label_Output.AutoSize = true;
-            this.label_Output.Dock = System.Windows.Forms.DockStyle.Top;
-            this.label_Output.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.label_Output.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(116)))), ((int)(((byte)(139)))));
-            this.label_Output.Location = new System.Drawing.Point(12, 8);
-            this.label_Output.Name = "label_Output";
-            this.label_Output.Size = new System.Drawing.Size(296, 20);
-            this.label_Output.TabIndex = 1;
-            this.label_Output.Text = "SCAN OUTPUT  (right-click to copy rows)";
-            // 
-            // progressBar_Scan
-            // 
-            this.progressBar_Scan.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.progressBar_Scan.Location = new System.Drawing.Point(12, 492);
-            this.progressBar_Scan.MarqueeAnimationSpeed = 30;
-            this.progressBar_Scan.Name = "progressBar_Scan";
-            this.progressBar_Scan.Size = new System.Drawing.Size(1176, 4);
-            this.progressBar_Scan.TabIndex = 2;
-            // 
             // colName
             // 
             this.colName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
@@ -416,6 +395,27 @@
             this.colResponse.MinimumWidth = 300;
             this.colResponse.Name = "colResponse";
             this.colResponse.ReadOnly = true;
+            // 
+            // label_Output
+            // 
+            this.label_Output.AutoSize = true;
+            this.label_Output.Dock = System.Windows.Forms.DockStyle.Top;
+            this.label_Output.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.label_Output.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(116)))), ((int)(((byte)(139)))));
+            this.label_Output.Location = new System.Drawing.Point(12, 8);
+            this.label_Output.Name = "label_Output";
+            this.label_Output.Size = new System.Drawing.Size(296, 20);
+            this.label_Output.TabIndex = 1;
+            this.label_Output.Text = "SCAN OUTPUT  (right-click to copy rows)";
+            // 
+            // progressBar_Scan
+            // 
+            this.progressBar_Scan.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.progressBar_Scan.Location = new System.Drawing.Point(12, 492);
+            this.progressBar_Scan.MarqueeAnimationSpeed = 30;
+            this.progressBar_Scan.Name = "progressBar_Scan";
+            this.progressBar_Scan.Size = new System.Drawing.Size(1176, 4);
+            this.progressBar_Scan.TabIndex = 2;
             // 
             // FullScannerForm
             // 
