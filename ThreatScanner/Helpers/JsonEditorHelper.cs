@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Drawing;
-using System.Text;
 using System.Text.Json;
 using System.Windows.Forms;
 
@@ -19,10 +18,10 @@ namespace ThreatScanner.Helpers
         private static readonly Color StringColor = Color.FromArgb(206, 145, 120);   // orange – string values
         private static readonly Color NumberColor = Color.FromArgb(181, 206, 168);   // green  – numbers
         private static readonly Color BoolNullColor = Color.FromArgb(86, 156, 214);   // bright-blue – true/false/null
-        private static readonly Color BraceColor = Color.FromArgb(255, 215, 0);     // gold   – braces / brackets
+        private static readonly Color BraceColor = Color.FromArgb(255, 215, 0);   // gold   – braces / brackets
         private static readonly Color ColonColor = Color.FromArgb(212, 212, 212);   // grey   – colon / comma
         private static readonly Color DefaultColor = Color.FromArgb(212, 212, 212);   // light-grey
-        private static readonly Color BorderAccent = Color.FromArgb(0, 122, 204);   // VS Code blue border
+        private static readonly Color BorderAccent = Color.FromArgb(0, 122, 204);    // VS Code blue border
 
         // ── Button colours ─────────────────────────────────────────────────────
         private static readonly Color BtnBg = Color.FromArgb(50, 50, 50);
@@ -40,23 +39,28 @@ namespace ThreatScanner.Helpers
         /// <param name="outEditor">The inner RichTextBox — read/write .Text to get/set JSON.</param>
         public static Panel Create(out RichTextBox outEditor)
         {
-            // ── Toolbar ────────────────────────────────────────────────────────
-            var toolbar = new Panel
+            // ── Toolbar: use FlowLayoutPanel so buttons never overlap ───────────
+            // Previously buttons used hardcoded Location X values with AutoSize=true,
+            // which caused them to crash into each other at runtime / high DPI.
+            var toolbar = new FlowLayoutPanel
             {
                 Dock = DockStyle.Top,
                 Height = 36,
                 BackColor = ToolbarBg,
-                Padding = new Padding(6, 4, 6, 0)
+                Padding = new Padding(4, 4, 4, 0),
+                FlowDirection = FlowDirection.LeftToRight,
+                WrapContents = false,
+                AutoSize = false,
             };
 
             // Draw a thin blue accent line at the bottom of the toolbar
             toolbar.Paint += (s, e) =>
             {
-                var pen = new System.Drawing.Pen(BorderAccent, 1);
-                e.Graphics.DrawLine(pen, 0, toolbar.Height - 1, toolbar.Width, toolbar.Height - 1);
+                using (var pen = new System.Drawing.Pen(BorderAccent, 1))
+                    e.Graphics.DrawLine(pen, 0, toolbar.Height - 1, toolbar.Width, toolbar.Height - 1);
             };
 
-            Button MakeBtn(string text, int x) => new Button
+            Button MakeBtn(string text) => new Button
             {
                 Text = text,
                 FlatStyle = FlatStyle.Flat,
@@ -64,16 +68,26 @@ namespace ThreatScanner.Helpers
                 ForeColor = Color.FromArgb(200, 200, 200),
                 BackColor = BtnBg,
                 Cursor = Cursors.Hand,
-                AutoSize = true,
-                Location = new Point(x, 5),
-                Height = 26,
-                Padding = new Padding(6, 0, 6, 0)
+                // Fixed width so buttons are consistent; tall enough for padding
+                Size = new Size(90, 26),
+                Margin = new Padding(2, 0, 2, 0),
             };
 
-            var btnFormat = MakeBtn("{ } Format", 4);
-            var btnValidate = MakeBtn("✔ Validate", 90);
-            var btnClear = MakeBtn("✕ Clear", 172);
-            var btnCopy = MakeBtn("⧉ Copy", 232);
+            var btnFormat = MakeBtn("{ } Format");
+            var btnValidate = MakeBtn("✔ Validate");
+            var btnClear = MakeBtn("✕ Clear");
+            var btnCopy = MakeBtn("⧉ Copy");
+
+            // Status label sits after the buttons in the flow
+            var lblStatus = new Label
+            {
+                AutoSize = true,
+                Font = new Font("Segoe UI", 8.5f, FontStyle.Italic),
+                ForeColor = StatusInfo,
+                Text = "ready",
+                // Vertical centering inside the flow row
+                Margin = new Padding(8, 6, 0, 0),
+            };
 
             foreach (var btn in new[] { btnFormat, btnValidate, btnClear, btnCopy })
             {
@@ -82,15 +96,6 @@ namespace ThreatScanner.Helpers
                 btn.FlatAppearance.MouseDownBackColor = Color.FromArgb(80, 80, 80);
                 toolbar.Controls.Add(btn);
             }
-
-            var lblStatus = new Label
-            {
-                AutoSize = true,
-                Font = new Font("Segoe UI", 8.5f, FontStyle.Italic),
-                ForeColor = StatusInfo,
-                Location = new Point(300, 10),
-                Text = "ready"
-            };
             toolbar.Controls.Add(lblStatus);
 
             void SetStatus(string msg, Color color)
@@ -103,8 +108,7 @@ namespace ThreatScanner.Helpers
             var rtb = new RichTextBox
             {
                 Dock = DockStyle.Fill,
-                Font = new Font("Cascadia Code", 10f) is var f && f.Name == "Cascadia Code"
-                              ? f : new Font("Consolas", 10f),
+                Font = new Font("Consolas", 10f),
                 BackColor = BgColor,
                 ForeColor = DefaultColor,
                 BorderStyle = BorderStyle.None,
@@ -112,7 +116,7 @@ namespace ThreatScanner.Helpers
                 ScrollBars = RichTextBoxScrollBars.Both,
                 WordWrap = false,
                 DetectUrls = false,
-                Margin = new Padding(0)
+                Margin = new Padding(0),
             };
 
             // ── Button handlers ────────────────────────────────────────────────
@@ -143,7 +147,7 @@ namespace ThreatScanner.Helpers
                 SetStatus("copied ✔", StatusOk);
             };
 
-            // ── Live syntax highlight (debounced via flag) ──────────────────────
+            // ── Live syntax highlight (debounced via flag) ─────────────────────
             bool highlighting = false;
             rtb.TextChanged += (s, e) =>
             {
@@ -153,13 +157,12 @@ namespace ThreatScanner.Helpers
                 finally { highlighting = false; }
             };
 
-            // ── Line-number gutter (lightweight) ───────────────────────────────
+            // ── Line-number gutter ─────────────────────────────────────────────
             var gutter = new Panel
             {
                 Width = 42,
                 Dock = DockStyle.Left,
                 BackColor = Color.FromArgb(37, 37, 38),
-                Padding = new Padding(0)
             };
 
             rtb.VScroll += (s, e) => gutter.Invalidate();
@@ -168,24 +171,25 @@ namespace ThreatScanner.Helpers
             gutter.Paint += (s, e) =>
             {
                 e.Graphics.Clear(Color.FromArgb(37, 37, 38));
-                var brush = new SolidBrush(Color.FromArgb(90, 90, 90));
-                var font = new Font("Consolas", 9f);
-                int lineH = rtb.Font.Height + 1;
-                // First visible line via GetCharIndexFromPosition
-                int firstChar = rtb.GetCharIndexFromPosition(new Point(0, 0));
-                int firstLine = rtb.GetLineFromCharIndex(firstChar);
-                int totalLines = rtb.Lines.Length == 0 ? 1 : rtb.Lines.Length;
-                int gutterW = gutter.Width;
-
-                for (int i = 0; i < gutter.Height / lineH + 2; i++)
+                using (var brush = new SolidBrush(Color.FromArgb(90, 90, 90)))
+                using (var font = new Font("Consolas", 9f))
                 {
-                    int lineNum = firstLine + i + 1;
-                    if (lineNum > totalLines) break;
-                    string num = lineNum.ToString();
-                    var sz = e.Graphics.MeasureString(num, font);
-                    e.Graphics.DrawString(num, font, brush,
-                        gutterW - sz.Width - 4,
-                        i * lineH + 2);
+                    int lineH = rtb.Font.Height + 1;
+                    int firstChar = rtb.GetCharIndexFromPosition(new Point(0, 0));
+                    int firstLine = rtb.GetLineFromCharIndex(firstChar);
+                    int totalLines = rtb.Lines.Length == 0 ? 1 : rtb.Lines.Length;
+                    int gutterW = gutter.Width;
+
+                    for (int i = 0; i < gutter.Height / lineH + 2; i++)
+                    {
+                        int lineNum = firstLine + i + 1;
+                        if (lineNum > totalLines) break;
+                        string num = lineNum.ToString();
+                        var sz = e.Graphics.MeasureString(num, font);
+                        e.Graphics.DrawString(num, font, brush,
+                            gutterW - sz.Width - 4,
+                            i * lineH + 2);
+                    }
                 }
             };
 

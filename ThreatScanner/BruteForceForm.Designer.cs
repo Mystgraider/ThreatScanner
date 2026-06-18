@@ -134,9 +134,9 @@
             this.textBox_Url.BackColor = System.Drawing.Color.White;
             this.textBox_Url.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.textBox_Url.Font = new System.Drawing.Font("Consolas", 10F);
-            this.textBox_Url.Location = new System.Drawing.Point(100, 12);
+            this.textBox_Url.Location = new System.Drawing.Point(110, 12);
             this.textBox_Url.Name = "textBox_Url";
-            this.textBox_Url.Size = new System.Drawing.Size(780, 27);
+            this.textBox_Url.Size = new System.Drawing.Size(770, 27);
             this.textBox_Url.TabIndex = 1;
             // 
             // panel_Config

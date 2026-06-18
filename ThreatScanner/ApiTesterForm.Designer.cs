@@ -14,6 +14,12 @@
 
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panel_TopBar = new System.Windows.Forms.Panel();
             this.label_AppTitle = new System.Windows.Forms.Label();
             this.label_AppSubtitle = new System.Windows.Forms.Label();
@@ -38,8 +44,9 @@
             this.col_HdrKey = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.col_HdrValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabPage_ApiBody = new System.Windows.Forms.TabPage();
-            this.richTextBox_Body = new System.Windows.Forms.RichTextBox();
+            this.panel_JsonEditor = new System.Windows.Forms.Panel();
             this.dataGridView_FormData = new System.Windows.Forms.DataGridView();
+            this.col_FormEnabled = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.col_FormKey = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.col_FormValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel_BodyType = new System.Windows.Forms.Panel();
@@ -114,9 +121,10 @@
             this.button_SaveReport.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
             this.button_SaveReport.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button_SaveReport.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button_SaveReport.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(65)))), ((int)(((byte)(85)))));
             this.button_SaveReport.Location = new System.Drawing.Point(1140, 16);
             this.button_SaveReport.Name = "button_SaveReport";
-            this.button_SaveReport.Size = new System.Drawing.Size(120, 32);
+            this.button_SaveReport.Size = new System.Drawing.Size(124, 32);
             this.button_SaveReport.TabIndex = 2;
             this.button_SaveReport.Text = "💾  Save Report";
             this.button_SaveReport.UseVisualStyleBackColor = false;
@@ -129,6 +137,7 @@
             this.button_ClearOutput.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
             this.button_ClearOutput.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button_ClearOutput.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button_ClearOutput.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(65)))), ((int)(((byte)(85)))));
             this.button_ClearOutput.Location = new System.Drawing.Point(1030, 16);
             this.button_ClearOutput.Name = "button_ClearOutput";
             this.button_ClearOutput.Size = new System.Drawing.Size(100, 32);
@@ -164,8 +173,10 @@
             // 
             // comboBox_Method
             // 
+            this.comboBox_Method.BackColor = System.Drawing.Color.White;
             this.comboBox_Method.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox_Method.Font = new System.Drawing.Font("Consolas", 9.5F, System.Drawing.FontStyle.Bold);
+            this.comboBox_Method.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(5)))), ((int)(((byte)(150)))), ((int)(((byte)(105)))));
             this.comboBox_Method.Items.AddRange(new object[] {
             "GET",
             "POST",
@@ -174,9 +185,9 @@
             "DELETE",
             "HEAD",
             "OPTIONS"});
-            this.comboBox_Method.Location = new System.Drawing.Point(80, 12);
+            this.comboBox_Method.Location = new System.Drawing.Point(91, 12);
             this.comboBox_Method.Name = "comboBox_Method";
-            this.comboBox_Method.Size = new System.Drawing.Size(100, 27);
+            this.comboBox_Method.Size = new System.Drawing.Size(89, 27);
             this.comboBox_Method.TabIndex = 1;
             // 
             // label_ApiEndpoint
@@ -195,9 +206,10 @@
             this.textBox_ApiEndpoint.BackColor = System.Drawing.Color.White;
             this.textBox_ApiEndpoint.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.textBox_ApiEndpoint.Font = new System.Drawing.Font("Consolas", 10F);
-            this.textBox_ApiEndpoint.Location = new System.Drawing.Point(278, 12);
+            this.textBox_ApiEndpoint.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
+            this.textBox_ApiEndpoint.Location = new System.Drawing.Point(288, 12);
             this.textBox_ApiEndpoint.Name = "textBox_ApiEndpoint";
-            this.textBox_ApiEndpoint.Size = new System.Drawing.Size(780, 27);
+            this.textBox_ApiEndpoint.Size = new System.Drawing.Size(770, 27);
             this.textBox_ApiEndpoint.TabIndex = 3;
             // 
             // button_ApiForce
@@ -205,6 +217,7 @@
             this.button_ApiForce.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(5)))), ((int)(((byte)(150)))), ((int)(((byte)(105)))));
             this.button_ApiForce.Cursor = System.Windows.Forms.Cursors.Hand;
             this.button_ApiForce.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(5)))), ((int)(((byte)(150)))), ((int)(((byte)(105)))));
+            this.button_ApiForce.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(4)))), ((int)(((byte)(120)))), ((int)(((byte)(87)))));
             this.button_ApiForce.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button_ApiForce.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
             this.button_ApiForce.ForeColor = System.Drawing.Color.White;
@@ -244,13 +257,31 @@
             // 
             this.dataGridView_Params.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(249)))), ((int)(((byte)(250)))));
             this.dataGridView_Params.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.dataGridView_Params.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(245)))), ((int)(((byte)(249)))));
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI", 8.5F, System.Drawing.FontStyle.Bold);
+            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(116)))), ((int)(((byte)(139)))));
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridView_Params.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dataGridView_Params.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView_Params.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.col_ParamEnabled,
             this.col_ParamKey,
             this.col_ParamValue,
             this.col_ParamDesc});
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(249)))), ((int)(((byte)(250)))));
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Consolas", 9F);
+            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(5)))), ((int)(((byte)(150)))), ((int)(((byte)(105)))));
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridView_Params.DefaultCellStyle = dataGridViewCellStyle2;
             this.dataGridView_Params.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataGridView_Params.EnableHeadersVisualStyles = false;
             this.dataGridView_Params.Font = new System.Drawing.Font("Consolas", 9F);
             this.dataGridView_Params.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
             this.dataGridView_Params.Location = new System.Drawing.Point(0, 0);
@@ -305,12 +336,30 @@
             // 
             this.dataGridView_Headers.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(249)))), ((int)(((byte)(250)))));
             this.dataGridView_Headers.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.dataGridView_Headers.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(245)))), ((int)(((byte)(249)))));
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Segoe UI", 8.5F, System.Drawing.FontStyle.Bold);
+            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(116)))), ((int)(((byte)(139)))));
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridView_Headers.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.dataGridView_Headers.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView_Headers.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.col_HdrEnabled,
             this.col_HdrKey,
             this.col_HdrValue});
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(249)))), ((int)(((byte)(250)))));
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Consolas", 9F);
+            dataGridViewCellStyle4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(5)))), ((int)(((byte)(150)))), ((int)(((byte)(105)))));
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridView_Headers.DefaultCellStyle = dataGridViewCellStyle4;
             this.dataGridView_Headers.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataGridView_Headers.EnableHeadersVisualStyles = false;
             this.dataGridView_Headers.Font = new System.Drawing.Font("Consolas", 9F);
             this.dataGridView_Headers.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
             this.dataGridView_Headers.Location = new System.Drawing.Point(0, 0);
@@ -345,7 +394,7 @@
             // tabPage_ApiBody
             // 
             this.tabPage_ApiBody.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(249)))), ((int)(((byte)(250)))));
-            this.tabPage_ApiBody.Controls.Add(this.richTextBox_Body);
+            this.tabPage_ApiBody.Controls.Add(this.panel_JsonEditor);
             this.tabPage_ApiBody.Controls.Add(this.dataGridView_FormData);
             this.tabPage_ApiBody.Controls.Add(this.panel_BodyType);
             this.tabPage_ApiBody.Location = new System.Drawing.Point(4, 29);
@@ -354,32 +403,43 @@
             this.tabPage_ApiBody.TabIndex = 2;
             this.tabPage_ApiBody.Text = "  Body";
             // 
-            // richTextBox_Body
+            // panel_JsonEditor
             // 
-            this.richTextBox_Body.AcceptsTab = true;
-            this.richTextBox_Body.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
-            this.richTextBox_Body.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.richTextBox_Body.DetectUrls = false;
-            this.richTextBox_Body.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.richTextBox_Body.Font = new System.Drawing.Font("Consolas", 9.5F);
-            this.richTextBox_Body.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(212)))), ((int)(((byte)(212)))), ((int)(((byte)(212)))));
-            this.richTextBox_Body.Location = new System.Drawing.Point(0, 32);
-            this.richTextBox_Body.Name = "richTextBox_Body";
-            this.richTextBox_Body.Size = new System.Drawing.Size(1272, 167);
-            this.richTextBox_Body.TabIndex = 0;
-            this.richTextBox_Body.Text = "";
-            this.richTextBox_Body.Visible = false;
-            this.richTextBox_Body.WordWrap = false;
+            this.panel_JsonEditor.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel_JsonEditor.Location = new System.Drawing.Point(0, 32);
+            this.panel_JsonEditor.Name = "panel_JsonEditor";
+            this.panel_JsonEditor.Size = new System.Drawing.Size(1272, 167);
+            this.panel_JsonEditor.TabIndex = 0;
+            this.panel_JsonEditor.Visible = false;
             // 
             // dataGridView_FormData
             // 
             this.dataGridView_FormData.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(249)))), ((int)(((byte)(250)))));
             this.dataGridView_FormData.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.dataGridView_FormData.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(245)))), ((int)(((byte)(249)))));
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Segoe UI", 8.5F, System.Drawing.FontStyle.Bold);
+            dataGridViewCellStyle5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(116)))), ((int)(((byte)(139)))));
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridView_FormData.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
             this.dataGridView_FormData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView_FormData.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.col_FormEnabled,
             this.col_FormKey,
             this.col_FormValue});
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(249)))), ((int)(((byte)(250)))));
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Consolas", 9F);
+            dataGridViewCellStyle6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(5)))), ((int)(((byte)(150)))), ((int)(((byte)(105)))));
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridView_FormData.DefaultCellStyle = dataGridViewCellStyle6;
             this.dataGridView_FormData.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataGridView_FormData.EnableHeadersVisualStyles = false;
             this.dataGridView_FormData.Font = new System.Drawing.Font("Consolas", 9F);
             this.dataGridView_FormData.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
             this.dataGridView_FormData.Location = new System.Drawing.Point(0, 32);
@@ -390,6 +450,15 @@
             this.dataGridView_FormData.Size = new System.Drawing.Size(1272, 167);
             this.dataGridView_FormData.TabIndex = 1;
             this.dataGridView_FormData.Visible = false;
+            // 
+            // col_FormEnabled
+            // 
+            this.col_FormEnabled.FalseValue = false;
+            this.col_FormEnabled.HeaderText = "";
+            this.col_FormEnabled.MinimumWidth = 6;
+            this.col_FormEnabled.Name = "col_FormEnabled";
+            this.col_FormEnabled.TrueValue = true;
+            this.col_FormEnabled.Width = 30;
             // 
             // col_FormKey
             // 
@@ -423,6 +492,7 @@
             this.radioButton_BodyNone.AutoSize = true;
             this.radioButton_BodyNone.Checked = true;
             this.radioButton_BodyNone.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.radioButton_BodyNone.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(116)))), ((int)(((byte)(139)))));
             this.radioButton_BodyNone.Location = new System.Drawing.Point(8, 6);
             this.radioButton_BodyNone.Name = "radioButton_BodyNone";
             this.radioButton_BodyNone.Size = new System.Drawing.Size(63, 24);
@@ -434,7 +504,8 @@
             // 
             this.radioButton_BodyForm.AutoSize = true;
             this.radioButton_BodyForm.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.radioButton_BodyForm.Location = new System.Drawing.Point(70, 6);
+            this.radioButton_BodyForm.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(116)))), ((int)(((byte)(139)))));
+            this.radioButton_BodyForm.Location = new System.Drawing.Point(80, 6);
             this.radioButton_BodyForm.Name = "radioButton_BodyForm";
             this.radioButton_BodyForm.Size = new System.Drawing.Size(98, 24);
             this.radioButton_BodyForm.TabIndex = 1;
@@ -444,7 +515,8 @@
             // 
             this.radioButton_BodyJson.AutoSize = true;
             this.radioButton_BodyJson.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.radioButton_BodyJson.Location = new System.Drawing.Point(166, 6);
+            this.radioButton_BodyJson.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(5)))), ((int)(((byte)(150)))), ((int)(((byte)(105)))));
+            this.radioButton_BodyJson.Location = new System.Drawing.Point(186, 6);
             this.radioButton_BodyJson.Name = "radioButton_BodyJson";
             this.radioButton_BodyJson.Size = new System.Drawing.Size(65, 24);
             this.radioButton_BodyJson.TabIndex = 2;
@@ -454,7 +526,8 @@
             // 
             this.radioButton_BodyRaw.AutoSize = true;
             this.radioButton_BodyRaw.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.radioButton_BodyRaw.Location = new System.Drawing.Point(230, 6);
+            this.radioButton_BodyRaw.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(116)))), ((int)(((byte)(139)))));
+            this.radioButton_BodyRaw.Location = new System.Drawing.Point(258, 6);
             this.radioButton_BodyRaw.Name = "radioButton_BodyRaw";
             this.radioButton_BodyRaw.Size = new System.Drawing.Size(54, 24);
             this.radioButton_BodyRaw.TabIndex = 3;
@@ -488,8 +561,10 @@
             // 
             // comboBox_AuthType
             // 
+            this.comboBox_AuthType.BackColor = System.Drawing.Color.White;
             this.comboBox_AuthType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox_AuthType.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.comboBox_AuthType.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
             this.comboBox_AuthType.Items.AddRange(new object[] {
             "No Auth",
             "Bearer Token",
@@ -517,9 +592,10 @@
             this.textBox_HeaderKey.BackColor = System.Drawing.Color.White;
             this.textBox_HeaderKey.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.textBox_HeaderKey.Font = new System.Drawing.Font("Consolas", 9F);
-            this.textBox_HeaderKey.Location = new System.Drawing.Point(440, 10);
+            this.textBox_HeaderKey.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
+            this.textBox_HeaderKey.Location = new System.Drawing.Point(449, 10);
             this.textBox_HeaderKey.Name = "textBox_HeaderKey";
-            this.textBox_HeaderKey.Size = new System.Drawing.Size(200, 25);
+            this.textBox_HeaderKey.Size = new System.Drawing.Size(191, 25);
             this.textBox_HeaderKey.TabIndex = 3;
             // 
             // label_AuthValue
@@ -538,10 +614,11 @@
             this.textBox_HeaderValue.BackColor = System.Drawing.Color.White;
             this.textBox_HeaderValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.textBox_HeaderValue.Font = new System.Drawing.Font("Consolas", 9F);
-            this.textBox_HeaderValue.Location = new System.Drawing.Point(800, 10);
+            this.textBox_HeaderValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
+            this.textBox_HeaderValue.Location = new System.Drawing.Point(816, 10);
             this.textBox_HeaderValue.Name = "textBox_HeaderValue";
             this.textBox_HeaderValue.PasswordChar = '●';
-            this.textBox_HeaderValue.Size = new System.Drawing.Size(360, 25);
+            this.textBox_HeaderValue.Size = new System.Drawing.Size(344, 25);
             this.textBox_HeaderValue.TabIndex = 5;
             // 
             // panel_Output
@@ -664,10 +741,11 @@
         private System.Windows.Forms.RadioButton radioButton_BodyForm;
         private System.Windows.Forms.RadioButton radioButton_BodyJson;
         private System.Windows.Forms.RadioButton radioButton_BodyRaw;
+        private System.Windows.Forms.Panel panel_JsonEditor;       // replaces richTextBox_Body
         private System.Windows.Forms.DataGridView dataGridView_FormData;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn col_FormEnabled;
         private System.Windows.Forms.DataGridViewTextBoxColumn col_FormKey;
         private System.Windows.Forms.DataGridViewTextBoxColumn col_FormValue;
-        private System.Windows.Forms.RichTextBox richTextBox_Body;
         private System.Windows.Forms.TabPage tabPage_ApiAuth;
         private System.Windows.Forms.Label label_AuthType;
         private System.Windows.Forms.ComboBox comboBox_AuthType;

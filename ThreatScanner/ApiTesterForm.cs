@@ -15,15 +15,36 @@ namespace ThreatScanner
     /// </summary>
     public partial class ApiTesterForm : Form
     {
+        // The actual RichTextBox inside the JsonEditorHelper panel (JSON + Raw body input)
+        private RichTextBox _jsonEditor;
+
         public ApiTesterForm()
         {
             InitializeComponent();
-            // Wire body-type radio buttons
+
+            // ── Inject the modern JSON editor into panel_JsonEditor ────────────
+            var editorPanel = JsonEditorHelper.Create(out _jsonEditor);
+            editorPanel.Dock = DockStyle.Fill;
+            panel_JsonEditor.Controls.Add(editorPanel);
+
+            // ── Wire body-type radio buttons ──────────────────────────────────
             radioButton_BodyNone.CheckedChanged += (s, e) => UpdateBodyVisibility();
             radioButton_BodyForm.CheckedChanged += (s, e) => UpdateBodyVisibility();
             radioButton_BodyJson.CheckedChanged += (s, e) => UpdateBodyVisibility();
             radioButton_BodyRaw.CheckedChanged += (s, e) => UpdateBodyVisibility();
             UpdateBodyVisibility();
+
+            // ── Enable Delete-key row deletion on all three grids ─────────────
+            ScanHelpers.EnableRowDeletion(dataGridView_Params);
+            ScanHelpers.EnableRowDeletion(dataGridView_Headers);
+            ScanHelpers.EnableRowDeletion(dataGridView_FormData);
+
+            // ── Default method selection ───────────────────────────────────────
+            if (comboBox_Method.SelectedIndex < 0)
+                comboBox_Method.SelectedIndex = 0;
+
+            if (comboBox_AuthType.SelectedIndex < 0)
+                comboBox_AuthType.SelectedIndex = 0;
         }
 
         // ─── HELPERS ─────────────────────────────────────────────────────────────
@@ -44,17 +65,16 @@ namespace ThreatScanner
             bool isJsonOrRaw = radioButton_BodyJson.Checked || radioButton_BodyRaw.Checked;
 
             dataGridView_FormData.Visible = isForm;
-            richTextBox_Body.Visible = isJsonOrRaw;
+            panel_JsonEditor.Visible = isJsonOrRaw;
         }
 
-        // ─── SEND ──────────────────────────────────────────────────────
+        // ─── SEND ─────────────────────────────────────────────────────────────────
 
         private async void button_ApiForce_Click(object sender, EventArgs e)
         {
             ClearOut();
 
             string rawUrl = textBox_ApiEndpoint.Text;
-
             if (string.IsNullOrWhiteSpace(rawUrl))
             {
                 MessageBox.Show("Enter an endpoint URL.", "ThreatScanner",
@@ -71,12 +91,12 @@ namespace ThreatScanner
             Log("🛰", $"{method} → {url}");
             LogSep();
 
-            // ── Snapshot UI state before Task.Run ────────────────────────────────
+            // ── Snapshot UI state before Task.Run ─────────────────────────────
             var queryParams = ScanHelpers.GetEnabledGridRows(dataGridView_Params, "col_ParamKey", "col_ParamValue");
             var extraHeaders = ScanHelpers.GetEnabledGridRows(dataGridView_Headers, "col_HdrKey", "col_HdrValue");
             var formDataRows = ScanHelpers.GetEnabledGridRows(dataGridView_FormData, "col_FormKey", "col_FormValue");
 
-            string bodyText = richTextBox_Body.Text;
+            string bodyText = _jsonEditor.Text;          // read from the injected editor
             bool bodyIsJson = radioButton_BodyJson.Checked;
             bool bodyIsForm = radioButton_BodyForm.Checked;
             bool bodyIsRaw = radioButton_BodyRaw.Checked;
@@ -86,7 +106,6 @@ namespace ThreatScanner
             string authKey = textBox_HeaderKey.Text.Trim();
             string authValue = textBox_HeaderValue.Text.Trim();
 
-
             try
             {
                 await Task.Run(async () =>
@@ -94,7 +113,6 @@ namespace ThreatScanner
                     try
                     {
                         var qParams = new Dictionary<string, string>(queryParams);
-
                         string finalUrl = url;
                         if (qParams.Count > 0)
                         {
@@ -133,9 +151,11 @@ namespace ThreatScanner
                             Log(icon, $"HTTP {code}  {resp.ReasonPhrase}");
 
                             foreach (var h in resp.Headers)
-                                foreach (var v in h.Value) Log("→", $"  {h.Key}: {v}");
+                                foreach (var v in h.Value)
+                                    Log("→", $"  {h.Key}: {v}");
                             foreach (var h in resp.Content.Headers)
-                                foreach (var v in h.Value) Log("→", $"  {h.Key}: {v}");
+                                foreach (var v in h.Value)
+                                    Log("→", $"  {h.Key}: {v}");
 
                             LogSep();
 
@@ -153,7 +173,7 @@ namespace ThreatScanner
                                         doc.RootElement,
                                         new JsonSerializerOptions { WriteIndented = true });
                                 }
-                                catch { /* not JSON */ }
+                                catch { /* not JSON – display as-is */ }
 
                                 string[] lines = displayBody
                                     .Replace("\r\n", "\n").Replace("\r", "\n").Split('\n');
