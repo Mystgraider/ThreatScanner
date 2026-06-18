@@ -1,13 +1,14 @@
-﻿using System;
+﻿using Microsoft.Playwright;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Net.Http;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Microsoft.Playwright;
 
 namespace ThreatScanner
 {
@@ -50,7 +51,7 @@ namespace ThreatScanner
         public AutoFillForm()
         {
             InitializeComponent();
-            textBox_TargetUrl.Text = "http://localhost/ERP/Login";
+            textBox_TargetUrl.Text = "";
             ApplyOutputTheme();
             // Step 3 is locked until Step 2 (Detect) has run
             button_FillForm.Enabled = false;
@@ -167,7 +168,7 @@ namespace ThreatScanner
         }
 
         // =========================================================================
-        //  CORE LOGIC — DETECT
+        //  CORE LOGIC — DETECT  (with diagnostic logging)
         // =========================================================================
 
         private async Task<List<FieldInfo>> DetectFieldsAsync(string url, bool headless)
@@ -187,17 +188,56 @@ namespace ThreatScanner
             });
             await page.WaitForLoadStateAsync(LoadState.Load, new PageWaitForLoadStateOptions { Timeout = 30000 });
 
-            // If the URL we're scanning bounced to a login page, warn loudly —
-            // detecting fields on a login redirect produces selectors that won't
-            // exist once the real (post-login) page is shown.
             if (page.Url.IndexOf("Login", StringComparison.OrdinalIgnoreCase) >= 0 &&
                 url.IndexOf("Login", StringComparison.OrdinalIgnoreCase) < 0)
             {
                 Log(string.Format("[Detect] WARNING: requested {0} but landed on {1} — log in first, then re-run Detect.", url, page.Url), Color.OrangeRed);
             }
 
+            // DIAG: how many frames does Playwright actually see?
+            Log(string.Format("[Detect][DIAG] page.Frames count = {0}", page.Frames.Count), Color.Cyan);
+
+            int frameIndex = -1;
             foreach (IFrame frame in page.Frames)
             {
+                frameIndex++;
+
+                // DIAG: how many <form> tags exist in this frame's DOM right now,
+                // and what are their id/name attributes (helps spot nested/duplicate forms).
+                // NOTE: we return a single JSON string and parse it ourselves —
+                // asking Playwright's EvaluateAsync<T> to deserialize directly into
+                // List<string> is unreliable and can throw a NullReferenceException
+                // deep inside EvaluateArgumentValueConverter on some payloads.
+                string formDescriptorsJson = "[]";
+                try
+                {
+                    formDescriptorsJson = await frame.EvaluateAsync<string>(@"
+                   () => JSON.stringify(Array.from(document.forms).map((f, i) =>
+                       [`#${i}`, `id=${f.id||''}`, `name=${f.name||''}`, `action=${f.action||''}`, `elements=${f.elements.length}`].join(' ')
+                   ))
+               ");
+                }
+                catch (Exception evalEx)
+                {
+                    Log(string.Format("[Detect][DIAG] frame[{0}] form-inventory eval failed: {1}", frameIndex, evalEx.Message), Color.OrangeRed);
+                }
+
+                List<string> formDescriptors = new List<string>();
+                try
+                {
+                    formDescriptors = JsonSerializer.Deserialize<List<string>>(formDescriptorsJson) ?? new List<string>();
+                }
+                catch
+                {
+                    // If parsing fails for any reason, fall back to showing the raw payload rather than crashing.
+                    formDescriptors = new List<string> { "(raw) " + formDescriptorsJson };
+                }
+
+                Log(string.Format("[Detect][DIAG] frame[{0}] url='{1}' isDetached={2} <form> count={3}",
+                    frameIndex, frame.Url, frame.IsDetached, formDescriptors.Count), Color.Cyan);
+                foreach (string fd in formDescriptors)
+                    Log("[Detect][DIAG]    form " + fd, Color.Cyan);
+
                 IReadOnlyList<IElementHandle> inputs = await frame.QuerySelectorAllAsync(
                     "input:not([type='hidden']):not([type='submit']):not([type='button'])" +
                     ":not([type='reset']):not([type='image']):not([type='file']), textarea");
@@ -205,15 +245,48 @@ namespace ThreatScanner
                 IReadOnlyList<IElementHandle> checkboxes = await frame.QuerySelectorAllAsync("input[type='checkbox']");
                 IReadOnlyList<IElementHandle> radios = await frame.QuerySelectorAllAsync("input[type='radio']");
 
+                // DIAG: raw counts before visibility filtering
+                Log(string.Format("[Detect][DIAG] frame[{0}] raw query counts -> inputs/textarea={1} selects={2} checkboxes={3} radios={4}",
+                    frameIndex, inputs.Count, selects.Count, checkboxes.Count, radios.Count), Color.Cyan);
+
+                int skippedInvisible = 0, skippedDisabled = 0, kept = 0;
+
                 foreach (IElementHandle el in inputs)
                 {
-                    if (!await el.IsVisibleAsync() || !await el.IsEnabledAsync()) continue;
+                    bool visible = await el.IsVisibleAsync();
+                    bool enabled = await el.IsEnabledAsync();
+                    if (!visible) { skippedInvisible++; continue; }
+                    if (!enabled) { skippedDisabled++; continue; }
+
                     string name = await el.GetAttributeAsync("name") ?? "";
                     string id = await el.GetAttributeAsync("id") ?? "";
                     string type = await el.GetAttributeAsync("type") ?? "text";
                     string ph = await el.GetAttributeAsync("placeholder") ?? "";
                     string label = await GetLabelText(frame, id);
                     string hint = (name + " " + id + " " + ph + " " + label).ToLowerInvariant();
+
+                    // DIAG: which <form> (by index) does this element actually belong to in the live DOM?
+                    string ownerForm = "(eval failed)";
+                    try
+                    {
+                        ownerForm = await el.EvaluateAsync<string>(@"
+                       el => {
+                           const f = el.closest('form');
+                           if (!f) return '(none)';
+                           const all = Array.from(document.forms);
+                           return '#' + all.indexOf(f) + ' id=' + (f.id || '') + ' name=' + (f.name || '');
+                       }
+                   ");
+                    }
+                    catch (Exception ownerEx)
+                    {
+                        ownerForm = "(eval failed: " + ownerEx.Message + ")";
+                    }
+
+                    kept++;
+                    Log(string.Format("[Detect][DIAG]    + input name='{0}' id='{1}' type='{2}' ownerForm={3}",
+                        name, id, type, ownerForm), Color.Gray);
+
                     results.Add(new FieldInfo
                     {
                         Tag = "input",
@@ -232,6 +305,25 @@ namespace ThreatScanner
                     string name = await el.GetAttributeAsync("name") ?? "";
                     string id = await el.GetAttributeAsync("id") ?? "";
                     string label = await GetLabelText(frame, id);
+
+                    string ownerForm = "(eval failed)";
+                    try
+                    {
+                        ownerForm = await el.EvaluateAsync<string>(@"
+                       el => {
+                           const f = el.closest('form');
+                           if (!f) return '(none)';
+                           const all = Array.from(document.forms);
+                           return '#' + all.indexOf(f) + ' id=' + (f.id || '') + ' name=' + (f.name || '');
+                       }
+                   ");
+                    }
+                    catch (Exception ownerEx)
+                    {
+                        ownerForm = "(eval failed: " + ownerEx.Message + ")";
+                    }
+                    Log(string.Format("[Detect][DIAG]    + select name='{0}' id='{1}' ownerForm={2}", name, id, ownerForm), Color.Gray);
+
                     results.Add(new FieldInfo
                     {
                         Tag = "select",
@@ -277,6 +369,26 @@ namespace ThreatScanner
                         SuggestedValue = "(first)"
                     });
                 }
+
+                // DIAG: summary for this frame
+                Log(string.Format("[Detect][DIAG] frame[{0}] visible-input summary -> kept={1} skippedInvisible={2} skippedDisabled={3}",
+                    frameIndex, kept, skippedInvisible, skippedDisabled), Color.Cyan);
+            }
+
+            // DIAG: final tally, and a duplicate-selector check (this is what breaks Fill
+            // even when Detect "found" everything — two fields mapping to the same selector
+            // means Fill will only ever hit the first one).
+            Log(string.Format("[Detect][DIAG] TOTAL fields collected = {0}", results.Count), Color.Cyan);
+            Dictionary<string, int> selectorCounts = new Dictionary<string, int>();
+            foreach (FieldInfo fi in results)
+            {
+                if (!selectorCounts.ContainsKey(fi.Selector)) selectorCounts[fi.Selector] = 0;
+                selectorCounts[fi.Selector]++;
+            }
+            foreach (KeyValuePair<string, int> kv in selectorCounts)
+            {
+                if (kv.Value > 1)
+                    Log(string.Format("[Detect][DIAG] !! DUPLICATE selector '{0}' used by {1} fields — Fill will likely only hit one of them.", kv.Key, kv.Value), Color.OrangeRed);
             }
 
             // NOTE: we deliberately do NOT close the browser/page here.
