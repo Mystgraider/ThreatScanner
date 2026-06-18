@@ -79,6 +79,7 @@
             // 
             // button_SaveReport
             // 
+            this.button_SaveReport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.button_SaveReport.BackColor = System.Drawing.Color.White;
             this.button_SaveReport.Cursor = System.Windows.Forms.Cursors.Hand;
             this.button_SaveReport.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
@@ -94,6 +95,7 @@
             // 
             // button_ClearOutput
             // 
+            this.button_ClearOutput.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.button_ClearOutput.BackColor = System.Drawing.Color.White;
             this.button_ClearOutput.Cursor = System.Windows.Forms.Cursors.Hand;
             this.button_ClearOutput.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));

@@ -39,11 +39,11 @@
             this.label_DnsInfo = new System.Windows.Forms.Label();
             this.panel_Output = new System.Windows.Forms.Panel();
             this.dataGridView_Output = new System.Windows.Forms.DataGridView();
+            this.label_Output = new System.Windows.Forms.Label();
+            this.progressBar_Scan = new System.Windows.Forms.ProgressBar();
             this.colName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colResponse = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.label_Output = new System.Windows.Forms.Label();
-            this.progressBar_Scan = new System.Windows.Forms.ProgressBar();
             this.panel_TopBar.SuspendLayout();
             this.panel_UrlBar.SuspendLayout();
             this.tabControl_Main.SuspendLayout();
@@ -93,12 +93,13 @@
             // 
             // button_CopyOutput
             // 
+            this.button_CopyOutput.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.button_CopyOutput.BackColor = System.Drawing.Color.White;
             this.button_CopyOutput.Cursor = System.Windows.Forms.Cursors.Hand;
             this.button_CopyOutput.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
             this.button_CopyOutput.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button_CopyOutput.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.button_CopyOutput.Location = new System.Drawing.Point(750, 16);
+            this.button_CopyOutput.Location = new System.Drawing.Point(818, 12);
             this.button_CopyOutput.Name = "button_CopyOutput";
             this.button_CopyOutput.Size = new System.Drawing.Size(110, 32);
             this.button_CopyOutput.TabIndex = 5;
@@ -108,12 +109,13 @@
             // 
             // button_SaveReport
             // 
+            this.button_SaveReport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.button_SaveReport.BackColor = System.Drawing.Color.White;
             this.button_SaveReport.Cursor = System.Windows.Forms.Cursors.Hand;
             this.button_SaveReport.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
             this.button_SaveReport.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button_SaveReport.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.button_SaveReport.Location = new System.Drawing.Point(875, 16);
+            this.button_SaveReport.Location = new System.Drawing.Point(943, 12);
             this.button_SaveReport.Name = "button_SaveReport";
             this.button_SaveReport.Size = new System.Drawing.Size(130, 32);
             this.button_SaveReport.TabIndex = 2;
@@ -123,12 +125,13 @@
             // 
             // button_ClearOutput
             // 
+            this.button_ClearOutput.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.button_ClearOutput.BackColor = System.Drawing.Color.White;
             this.button_ClearOutput.Cursor = System.Windows.Forms.Cursors.Hand;
             this.button_ClearOutput.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
             this.button_ClearOutput.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button_ClearOutput.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.button_ClearOutput.Location = new System.Drawing.Point(1020, 16);
+            this.button_ClearOutput.Location = new System.Drawing.Point(1088, 12);
             this.button_ClearOutput.Name = "button_ClearOutput";
             this.button_ClearOutput.Size = new System.Drawing.Size(100, 32);
             this.button_ClearOutput.TabIndex = 3;
@@ -369,32 +372,6 @@
             this.dataGridView_Output.TabIndex = 0;
             this.dataGridView_Output.MouseDown += new System.Windows.Forms.MouseEventHandler(this.dataGridView_Output_MouseDown);
             // 
-            // colName
-            // 
-            this.colName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.colName.HeaderText = "Name / Path";
-            this.colName.MinimumWidth = 200;
-            this.colName.Name = "colName";
-            this.colName.ReadOnly = true;
-            this.colName.Width = 320;
-            // 
-            // colStatus
-            // 
-            this.colStatus.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.colStatus.HeaderText = "Status";
-            this.colStatus.MinimumWidth = 140;
-            this.colStatus.Name = "colStatus";
-            this.colStatus.ReadOnly = true;
-            this.colStatus.Width = 200;
-            // 
-            // colResponse
-            // 
-            this.colResponse.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.colResponse.HeaderText = "Response / Detail";
-            this.colResponse.MinimumWidth = 300;
-            this.colResponse.Name = "colResponse";
-            this.colResponse.ReadOnly = true;
-            // 
             // label_Output
             // 
             this.label_Output.AutoSize = true;
@@ -415,6 +392,30 @@
             this.progressBar_Scan.Name = "progressBar_Scan";
             this.progressBar_Scan.Size = new System.Drawing.Size(1176, 4);
             this.progressBar_Scan.TabIndex = 2;
+            // 
+            // colName
+            // 
+            this.colName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.colName.HeaderText = "Name / Path";
+            this.colName.MinimumWidth = 320;
+            this.colName.Name = "colName";
+            this.colName.ReadOnly = true;
+            // 
+            // colStatus
+            // 
+            this.colStatus.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.colStatus.HeaderText = "Status";
+            this.colStatus.MinimumWidth = 140;
+            this.colStatus.Name = "colStatus";
+            this.colStatus.ReadOnly = true;
+            // 
+            // colResponse
+            // 
+            this.colResponse.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.colResponse.HeaderText = "Response / Detail";
+            this.colResponse.MinimumWidth = 300;
+            this.colResponse.Name = "colResponse";
+            this.colResponse.ReadOnly = true;
             // 
             // FullScannerForm
             // 
@@ -475,9 +476,9 @@
         private System.Windows.Forms.Panel panel_Output;
         private System.Windows.Forms.Label label_Output;
         private System.Windows.Forms.DataGridView dataGridView_Output;
+        private System.Windows.Forms.ProgressBar progressBar_Scan;
         private System.Windows.Forms.DataGridViewTextBoxColumn colName;
         private System.Windows.Forms.DataGridViewTextBoxColumn colStatus;
         private System.Windows.Forms.DataGridViewTextBoxColumn colResponse;
-        private System.Windows.Forms.ProgressBar progressBar_Scan;
     }
 }

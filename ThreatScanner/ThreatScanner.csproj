@@ -126,6 +126,9 @@
     <EmbeddedResource Include="BruteForceForm.resx">
       <DependentUpon>BruteForceForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="CsrfTesterForm.resx">
+      <DependentUpon>CsrfTesterForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FullScannerForm.resx">
       <DependentUpon>FullScannerForm.cs</DependentUpon>
     </EmbeddedResource>
