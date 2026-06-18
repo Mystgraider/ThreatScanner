@@ -26,6 +26,8 @@
             this.label_ApiDesc = new System.Windows.Forms.Label();
             this.button_OpenWebSocket = new System.Windows.Forms.Button();
             this.label_WsDesc = new System.Windows.Forms.Label();
+            this.button_OpenCsrf = new System.Windows.Forms.Button();
+            this.label_CsrfDesc = new System.Windows.Forms.Label();
             this.label_Disclaimer = new System.Windows.Forms.Label();
             this.panel_TopBar.SuspendLayout();
             this.panel_Cards.SuspendLayout();
@@ -40,7 +42,7 @@
             this.panel_TopBar.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel_TopBar.Location = new System.Drawing.Point(0, 0);
             this.panel_TopBar.Name = "panel_TopBar";
-            this.panel_TopBar.Size = new System.Drawing.Size(1480, 80);
+            this.panel_TopBar.Size = new System.Drawing.Size(1840, 80);
             this.panel_TopBar.TabIndex = 1;
 
             // 
@@ -79,11 +81,13 @@
             this.panel_Cards.Controls.Add(this.label_ApiDesc);
             this.panel_Cards.Controls.Add(this.button_OpenWebSocket);
             this.panel_Cards.Controls.Add(this.label_WsDesc);
+            this.panel_Cards.Controls.Add(this.button_OpenCsrf);
+            this.panel_Cards.Controls.Add(this.label_CsrfDesc);
             this.panel_Cards.Controls.Add(this.label_Disclaimer);
             this.panel_Cards.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel_Cards.Location = new System.Drawing.Point(0, 80);
             this.panel_Cards.Name = "panel_Cards";
-            this.panel_Cards.Size = new System.Drawing.Size(1480, 263);
+            this.panel_Cards.Size = new System.Drawing.Size(1840, 263);
             this.panel_Cards.TabIndex = 0;
 
             // 
@@ -174,7 +178,7 @@
             this.label_ApiDesc.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 
             // 
-            // button_OpenWebSocket  ← NEW (orange)
+            // button_OpenWebSocket
             // 
             this.button_OpenWebSocket.BackColor = System.Drawing.Color.FromArgb(234, 88, 12);
             this.button_OpenWebSocket.Cursor = System.Windows.Forms.Cursors.Hand;
@@ -203,6 +207,35 @@
             this.label_WsDesc.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 
             // 
+            // button_OpenCsrf
+            // 
+            this.button_OpenCsrf.BackColor = System.Drawing.Color.FromArgb(109, 40, 217);
+            this.button_OpenCsrf.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.button_OpenCsrf.FlatAppearance.BorderSize = 0;
+            this.button_OpenCsrf.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button_OpenCsrf.Font = new System.Drawing.Font("Segoe UI", 13F, System.Drawing.FontStyle.Bold);
+            this.button_OpenCsrf.ForeColor = System.Drawing.Color.White;
+            this.button_OpenCsrf.Location = new System.Drawing.Point(1470, 60);
+            this.button_OpenCsrf.Name = "button_OpenCsrf";
+            this.button_OpenCsrf.Size = new System.Drawing.Size(330, 100);
+            this.button_OpenCsrf.TabIndex = 8;
+            this.button_OpenCsrf.Text = "🛡  CSRF Tester";
+            this.button_OpenCsrf.UseVisualStyleBackColor = false;
+            this.button_OpenCsrf.Click += new System.EventHandler(this.button_OpenCsrf_Click);
+
+            // 
+            // label_CsrfDesc
+            // 
+            this.label_CsrfDesc.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.label_CsrfDesc.ForeColor = System.Drawing.Color.FromArgb(71, 85, 105);
+            this.label_CsrfDesc.Location = new System.Drawing.Point(1470, 170);
+            this.label_CsrfDesc.Name = "label_CsrfDesc";
+            this.label_CsrfDesc.Size = new System.Drawing.Size(330, 50);
+            this.label_CsrfDesc.TabIndex = 9;
+            this.label_CsrfDesc.Text = "Detect missing tokens, SameSite cookies,\nCORS misconfig & forge cross-site requests";
+            this.label_CsrfDesc.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+
+            // 
             // label_Disclaimer
             // 
             this.label_Disclaimer.Dock = System.Windows.Forms.DockStyle.Bottom;
@@ -210,8 +243,8 @@
             this.label_Disclaimer.ForeColor = System.Drawing.Color.FromArgb(148, 163, 184);
             this.label_Disclaimer.Location = new System.Drawing.Point(0, 235);
             this.label_Disclaimer.Name = "label_Disclaimer";
-            this.label_Disclaimer.Size = new System.Drawing.Size(1480, 28);
-            this.label_Disclaimer.TabIndex = 8;
+            this.label_Disclaimer.Size = new System.Drawing.Size(1840, 28);
+            this.label_Disclaimer.TabIndex = 10;
             this.label_Disclaimer.Text = "⚠️  For authorized penetration testing only. Unauthorized use is illegal.";
             this.label_Disclaimer.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 
@@ -221,11 +254,11 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(248, 249, 250);
-            this.ClientSize = new System.Drawing.Size(1480, 343);
+            this.ClientSize = new System.Drawing.Size(1840, 343);
             this.Controls.Add(this.panel_Cards);
             this.Controls.Add(this.panel_TopBar);
             this.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.MinimumSize = new System.Drawing.Size(1480, 350);
+            this.MinimumSize = new System.Drawing.Size(1840, 380);
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ThreatScanner — Select Tool";
@@ -245,10 +278,12 @@
         private System.Windows.Forms.Button button_OpenBruteForce;
         private System.Windows.Forms.Button button_OpenApiTester;
         private System.Windows.Forms.Button button_OpenWebSocket;
+        private System.Windows.Forms.Button button_OpenCsrf;
         private System.Windows.Forms.Label label_ScannerDesc;
         private System.Windows.Forms.Label label_BruteDesc;
         private System.Windows.Forms.Label label_ApiDesc;
         private System.Windows.Forms.Label label_WsDesc;
+        private System.Windows.Forms.Label label_CsrfDesc;
         private System.Windows.Forms.Label label_Disclaimer;
     }
 }

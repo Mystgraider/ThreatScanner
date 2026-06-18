@@ -35,5 +35,9 @@ namespace ThreatScanner
         {
             new WebSocketForm().Show();
         }
+        private void button_OpenCsrf_Click(object sender, EventArgs e)
+        {
+            new CsrfTesterForm().Show();
+        }
     }
 }

@@ -91,6 +91,12 @@
     <Compile Include="BruteForceForm.Designer.cs">
       <DependentUpon>BruteForceForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="CsrfTesterForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CsrfTesterForm.Designer.cs">
+      <DependentUpon>CsrfTesterForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="FullScannerForm.cs">
       <SubType>Form</SubType>
     </Compile>
