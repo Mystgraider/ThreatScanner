@@ -30,5 +30,10 @@ namespace ThreatScanner
         {
             new ApiTesterForm().Show();
         }
+
+        private void button_OpenWebSocket_Click(object sender, EventArgs e)
+        {
+            new WebSocketForm().Show();
+        }
     }
 }

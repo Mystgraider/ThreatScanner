@@ -108,6 +108,12 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WebSocketForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WebSocketForm.Designer.cs">
+      <DependentUpon>WebSocketForm.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="ApiTesterForm.resx">
       <DependentUpon>ApiTesterForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -129,6 +135,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="WebSocketForm.resx">
+      <DependentUpon>WebSocketForm.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="app.manifest" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
