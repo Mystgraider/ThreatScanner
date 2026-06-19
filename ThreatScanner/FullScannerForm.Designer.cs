@@ -75,9 +75,9 @@
             this.label_AppTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(99)))), ((int)(((byte)(235)))));
             this.label_AppTitle.Location = new System.Drawing.Point(16, 12);
             this.label_AppTitle.Name = "label_AppTitle";
-            this.label_AppTitle.Size = new System.Drawing.Size(365, 32);
+            this.label_AppTitle.Size = new System.Drawing.Size(201, 32);
             this.label_AppTitle.TabIndex = 0;
-            this.label_AppTitle.Text = "🔍  ThreatScanner — Full Scan";
+            this.label_AppTitle.Text = "🔍  Full Scanner";
             // 
             // label_AppSubtitle
             // 
