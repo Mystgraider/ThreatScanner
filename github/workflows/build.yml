@@ -1,0 +1,78 @@
+name: Build and Release ThreatScanner
+
+on:
+  push:
+    branches: [main, master]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v2
+
+      - name: Setup NuGet
+        uses: NuGet/setup-nuget@v2
+
+      - name: Restore NuGet packages
+        run: nuget restore ThreatScanner.sln
+
+      - name: Install Playwright browsers
+        run: |
+          cd ThreatScanner
+          dotnet tool install --global Microsoft.Playwright.CLI --version 1.60.0 || true
+          playwright install chromium || true
+        shell: pwsh
+        continue-on-error: true
+
+      - name: Build Release
+        run: msbuild ThreatScanner.sln /p:Configuration=Release /p:Platform="Any CPU"
+
+      - name: Get version
+        id: version
+        run: |
+          $date = Get-Date -Format "yyyy.MM.dd"
+          $run = "${{ github.run_number }}"
+          echo "tag=v$date-build$run" >> $env:GITHUB_OUTPUT
+        shell: pwsh
+
+      - name: Zip release files
+        run: |
+          Compress-Archive -Path "ThreatScanner/bin/Release/*" -DestinationPath "ThreatScanner-Release.zip"
+        shell: pwsh
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ThreatScanner-${{ steps.version.outputs.tag }}
+          path: ThreatScanner/bin/Release/
+          retention-days: 30
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.version.outputs.tag }}
+          name: ThreatScanner ${{ steps.version.outputs.tag }}
+          body: |
+            ## ThreatScanner Build ${{ github.run_number }}
+
+            **Commit:** ${{ github.sha }}
+            **Branch:** ${{ github.ref_name }}
+            **Built:** ${{ github.event.head_commit.timestamp }}
+
+            ### How to run:
+            1. Download `ThreatScanner-Release.zip`
+            2. Extract anywhere
+            3. Run `ThreatScanner.exe`
+
+            > ⚠️ For authorized penetration testing only.
+          files: ThreatScanner-Release.zip
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
