@@ -5,6 +5,9 @@ on:
     branches: [main, master]
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: windows-latest
@@ -21,14 +24,6 @@ jobs:
 
       - name: Restore NuGet packages
         run: nuget restore ThreatScanner.sln
-
-      - name: Install Playwright browsers
-        run: |
-          cd ThreatScanner
-          dotnet tool install --global Microsoft.Playwright.CLI --version 1.60.0 || true
-          playwright install chromium || true
-        shell: pwsh
-        continue-on-error: true
 
       - name: Build Release
         run: msbuild ThreatScanner.sln /p:Configuration=Release /p:Platform="Any CPU"
@@ -63,14 +58,13 @@ jobs:
 
             **Commit:** ${{ github.sha }}
             **Branch:** ${{ github.ref_name }}
-            **Built:** ${{ github.event.head_commit.timestamp }}
 
             ### How to run:
             1. Download `ThreatScanner-Release.zip`
             2. Extract anywhere
             3. Run `ThreatScanner.exe`
 
-            > ⚠️ For authorized penetration testing only.
+            > For authorized penetration testing only.
           files: ThreatScanner-Release.zip
           draft: false
           prerelease: false
